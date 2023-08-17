@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('time_table', function (Blueprint $table) {
+        Schema::create('groups_list', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('group_id');
-            $table->dateTime('datetime');
-            $table->string('lesson_name');
-            $table->string('class_number');
-            $table->text('info');
+            $table->string('title');
 
         });
 
