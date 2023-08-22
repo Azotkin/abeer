@@ -17,8 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
-
-Route::post('/test', [\App\Http\Controllers\studentController::class, 'getValue']);
+//
+//Route::post('/test',[\App\Http\Controllers\testController::class, 'testFunc']);

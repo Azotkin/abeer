@@ -1,54 +1,49 @@
 <template>
-
     <div class="container">
-        <table class="table caption-top">
-            <caption>List of users</caption>
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
-            </tbody>
-        </table>
+        <form-lesson
+            :lessons-api-data="lessonsApiData"
+        />
+        <modal-window/>
+
+
     </div>
-
-
 </template>
 
 <script>
+import formLesson from './components/formLesson.vue'
+import modalWindow from './components/modalWindow.vue'
+import axios from "axios";
 
-export default{
-    data:function(){
+export default {
+    data: function () {
         return {
-            name:123
+            lessonsApiData:[],
+
         }
+    },
+    components: {
+        formLesson,
+        modalWindow
+    },
+    created() {
+        this.getTableTimeList();
+    },
+    methods:{
+        getTableTimeList(){
+            axios({
+                method:'post',
+                url:'/api/lessons/list/get'
+            })
+                .then(response => (this.lessonsApiData= response.data)).catch(function(error){
+                console.log(error)
+            })
+        },
     }
 }
 
 </script>
 
 <style>
+
 
 </style>
