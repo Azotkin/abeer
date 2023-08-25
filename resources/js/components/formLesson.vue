@@ -5,8 +5,7 @@ import timeTableComp from './timeTableComp.vue';
 export default {
     data:function(){
         return{
-            pagesCount:0,
-            page:1,
+            currentPage:1,
             paginationOffset:0,
             paginationItemsPerPage:5,
             coinsArray:[]
@@ -21,17 +20,28 @@ export default {
     },
     computed:{
         pagesCount(){
-            return 0;
-            // return Math.ceil(this.lessonsApiData.length/this.paginationItemsPerPage)
+            if (this.lessonsApiData)
+                return Math.ceil(this.lessonsApiData.length/this.paginationItemsPerPage)
         }
+    },
+    watch:{
+        lessonsApiData: function (items) {
+            if (items.length > 0){
+              this.changePage(1)
+            }
+        }
+    },
+    mounted() {
+
+
     },
     methods:{
         changePage(pageNum){
-                let newArray=this.array;
-                this.page = pageNum;
-                this.paginationOffset=(this.paginationItemsPerPage*pageNum)-this.paginationItemsPerPage;
-                this.coinsArray = newArray.splice(this.paginationOffset, this.paginationItemsPerPage);
-                window.scroll(0,0)
+             let newArray =   Object.entries(Object.assign({},  this.lessonsApiData));
+             this.currentPage = pageNum;
+             this.paginationOffset=(this.paginationItemsPerPage*pageNum)-this.paginationItemsPerPage;
+             this.coinsArray = newArray.splice(this.paginationOffset, this.paginationItemsPerPage);
+             window.scroll(0,0)
         }
     },
 
@@ -42,41 +52,36 @@ export default {
 </script>
 
 <template>
+    <div class="formLesson">
         <table class="table caption-top">
-            <caption>Список студентов</caption>
             <thead>
             <tr>
-
                 <th scope="col">Дата</th>
                 <th scope="col">Предмет</th>
-
             </tr>
             </thead>
             <tbody>
 
-            <time-table-comp v-for="item in lessonsApiData"
-            :item="item"
-            v-model="page"
+            <time-table-comp v-for="item in coinsArray"
+                :item="item[1]"
+                v-model="currentPage"
             />
             </tbody>
         </table>
     <nav id="pagination">
-<!--        page: {{ page}}<br>-->
-<!--        pagination_offset: {{ paginationOffset }}<br>-->
-<!--        pagination_items_per_page:{{paginationItemsPerPage}}<br>-->
-<!--        pagination_items_total:{{array.length}}<br>-->
-<!--        pagesCount:{{pagesCount}}-->
     <Paginate
-        v-model="page"
+        v-model="currentPage"
         :page-count="pagesCount"
         :click-handler="changePage"
-        :prev-text="'Prev'"
-        :next-text="'Next'"
+        :prev-text="'пред'"
+        :next-text="'след'"
         :container-class="'pagination'">
     </Paginate>
     </nav>
+    </div>
 </template>
 
-<style scoped>
-
+<style>
+formLesson{    background-color: #212529;
+}
 </style>

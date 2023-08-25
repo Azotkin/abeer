@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Students/>
         <form-lesson
             :lessons-api-data="lessonsApiData"
         />
@@ -13,6 +14,7 @@
 import formLesson from './components/formLesson.vue'
 import modalWindow from './components/modalWindow.vue'
 import axios from "axios";
+import Students from './components/Students.vue'
 
 export default {
     data: function () {
@@ -23,7 +25,8 @@ export default {
     },
     components: {
         formLesson,
-        modalWindow
+        modalWindow,
+        Students
     },
     created() {
         this.getTableTimeList();
