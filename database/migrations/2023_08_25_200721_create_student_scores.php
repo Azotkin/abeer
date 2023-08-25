@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('time_table', function (Blueprint $table) {
+        Schema::create('student_scores', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->integer('group_id');
+            $table->integer('student_id');
             $table->dateTime('datetime');
-            $table->string('lesson_name');
-            $table->string('class_number');
-            $table->text('info');
-
+            $table->boolean('is_exist')->default(0);
+            $table->integer('value');
+            $table->timestamps();
         });
-
     }
 
     /**
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time_table');
+        Schema::dropIfExists('student_scores');
     }
 };

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lesson;
 use App\Models\test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,8 @@ class testController extends Controller
 
     public function index()
     {
-        $timeTable=DB::table('time_table')->get();
-        return $timeTable;
+        $timeList= Lesson::orderBy('created_at','desc')->get();
+        return $timeList;
     }
 
     /**

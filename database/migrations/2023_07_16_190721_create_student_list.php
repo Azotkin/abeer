@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('student_list', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('student_name');
-            $table->string('group_number');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('group_id');
 //            $table->string('');
         });
     }

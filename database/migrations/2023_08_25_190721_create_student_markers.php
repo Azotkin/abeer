@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('groups_list', function (Blueprint $table) {
+        Schema::create('student_markers', function (Blueprint $table) {
             $table->id();
+            $table->integer('student_id');
+            $table->dateTime('datetime');
+            $table->string('comment',200);
             $table->timestamps();
-            $table->string('title');
-
         });
-
     }
 
     /**
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-     //
+        Schema::dropIfExists('student_markers');
     }
 };
