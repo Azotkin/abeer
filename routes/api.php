@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/lessons/item/save',[\App\Http\Controllers\api\testController::class, 'store']);
 
 Route::post('/lessons/list/get',[\App\Http\Controllers\api\testController::class, 'index']);
+
+Route::post('/calendar/list/get',[\App\Http\Controllers\api\calendarController::class,'test']);

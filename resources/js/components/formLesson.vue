@@ -16,7 +16,8 @@ export default {
         Paginate
     },
     props:{
-        lessonsApiData:Array
+        lessonsApiData:Array,
+        tabs:Boolean
     },
     computed:{
         pagesCount(){
@@ -52,7 +53,7 @@ export default {
 </script>
 
 <template>
-    <div class="formLesson">
+    <div class="formLesson" v-if="!tabs">
         <table class="table caption-top">
             <thead>
             <tr>
@@ -70,6 +71,7 @@ export default {
         </table>
     <nav id="pagination">
     <Paginate
+        v-if="!tabs"
         v-model="currentPage"
         :page-count="pagesCount"
         :click-handler="changePage"
@@ -82,6 +84,9 @@ export default {
 </template>
 
 <style>
+.pagination{
+
+}
 formLesson{    background-color: #212529;
 }
 </style>

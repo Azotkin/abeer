@@ -1,49 +1,57 @@
 <script>
 import axios from "axios";
+
 export default {
     data: function () {
         return {
-            lessonName:'',
-            classRoom:'',
-            date:'',
-            note:'',
-            responseFromServer:'',
-            stack:0
+            lessonName: '',
+            classRoom: '',
+            date: '',
+            note: '',
+            responseFromServer: '',
+            stack: 0
         }
     },
-    methods:{
-        postSubmit(){
+    emits:
+        [
+            'updateLessonList'
+        ],
+
+    methods: {
+        postSubmit() {
             axios({
                 method: 'post',
                 url: 'api/lessons/item/save',
                 data: {
                     lessonName: this.lessonName,
                     classRoom: this.classRoom,
-                    date:this.date,
+                    date: this.date,
                     note: this.note
 
                 }
             })
-                .then(response=>(this.responseFromServer=response.data))
-                .catch(error=>(this.responseFromServer=error.response.data.message));
+                .then(response => (this.responseFromServer = response.data))
+                .catch(error => (this.responseFromServer = error.response.data.message));
+            this.$emit('updateLessonList')
+
         }
     },
-    watch:{
-        responseFromServer: function(){
+    watch: {
+        responseFromServer: function () {
             this.stack++
-            }
         }
+    }
 
 }
 </script>
 
 <template>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-       Добавить занятия
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Добавить занятия
     </button>
 
     <!-- Модальное окно -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -54,10 +62,11 @@ export default {
                 </div>
                 <div class="modal-body">
                     <form>
-                        <p class="response">{{responseFromServer}}</p>
+                        <p class="response">{{ responseFromServer }}</p>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Предмет</label>
-                            <input type="text" name="lessonName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="lessonName">
+                            <input type="text" name="lessonName" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" v-model="lessonName">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Аудитория</label>
@@ -65,11 +74,13 @@ export default {
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Дата</label>
-                            <input type="datetime-local" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="date">
+                            <input type="datetime-local" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" v-model="date">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Примечание</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="note">
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                   v-model="note">
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
@@ -102,7 +113,7 @@ export default {
 </template>
 
 <style scoped>
-    .response{
-        color: #b13a47;
-    }
+.response {
+    color: #b13a47;
+}
 </style>
