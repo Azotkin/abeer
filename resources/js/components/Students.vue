@@ -6,6 +6,9 @@ export default {
 
         }
     },
+    props:{
+      items:Object
+    },
     components:{
         calendar
     }
@@ -17,7 +20,8 @@ export default {
 <template>
 
 
-<calendar/>
+<calendar
+:items="items"/>
 
 </template>
 

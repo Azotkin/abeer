@@ -23,3 +23,9 @@ Route::post('/lessons/item/save',[\App\Http\Controllers\api\testController::clas
 Route::post('/lessons/list/get',[\App\Http\Controllers\api\testController::class, 'index']);
 
 Route::post('/calendar/list/get',[\App\Http\Controllers\api\calendarController::class,'test']);
+
+Route::post('/upload/image',[\App\Http\Controllers\uploadImage::class,'upLoad']);
+
+Route::post('/product/item/save',[\App\Http\Controllers\productController::class, 'store']);
+
+Route::post('/item/list/get',[\App\Http\Controllers\productController::class, 'index']);

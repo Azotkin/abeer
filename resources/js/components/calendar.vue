@@ -1,4 +1,5 @@
 <script>
+import cartDay from './cartDay.vue'
 export default {
     data: function () {
         return {
@@ -8,8 +9,15 @@ export default {
             day: ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"],
             monthes: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
             date: new Date(),
-            days:this.calendar()
+            days:[]
         }
+    },
+    components:{
+        cartDay
+    },
+    props: {
+        items: Object,
+        lessonsApiData: Object
     },
 
     methods: {
@@ -37,6 +45,7 @@ export default {
             }
             // debugger
             // this.dayChange;
+            this.days=days
             return days;
 
         },
@@ -56,7 +65,13 @@ export default {
                 this.year++;
             }
         },
+        compareDay: function (dayString) {
+            let dif = dayString.length - 9
+
+            return dayString.slice(0, dayString.length-9)
+        }
     },
+    computed: {}
 }
 
 
@@ -64,6 +79,12 @@ export default {
 
 <template>
 
+
+
+<!--<cart-day-->
+<!--    v-for="(week, day) in days"-->
+<!--    :week="week"-->
+<!--/>-->
 
     <table class="calendar">
         <thead>
@@ -73,38 +94,44 @@ export default {
             </td>
             <td colspan="5" class="month-year"> {{ monthes[month] }} {{ year }}</td>
             <td>
-                <button class="btn btn-outline-dark" v-on:click="increase">вперед</button>
+                <button class="btn btn-dark" v-on:click="increase">вперед</button>
             </td>
         </tr>
         <tr>
-            <td v-for="d in day">{{d}}</td>
+            <td v-for="d in day">{{ d }}</td>
         </tr>
         </thead>
         <tbody>
         <tr v-for="week in calendar()">
-            <td v-for="(day, index) in week"> {{ day.index }}</td>
+            <td v-for="(day, index) in week">
+                <cart-day
+                    :week="day.index"
+                />
+            </td>
         </tr>
         </tbody>
     </table>
 
 
-
 </template>
 
 <style>
-.calendar{
+.calendar {
+    margin: 50px;
+    width: 1000px;
+    height: 700px;
     background-color: #292e2f;
     color: #bbbbbb;
     border-radius: 5px 5px 5px 5px;
-    margin: 20px;
+    //margin: 20px;
 }
-.month-year{
-color: #a60011;
+
+.month-year {
+    color: #a60011;
 }
-.calendar:hover{
+
+.calendar:hover {
     margin: 50px;
-    width: 400px;
-    height: 300px;
     border-radius: 20px 20px 20px 20px;
 }
 </style>

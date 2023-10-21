@@ -1,4 +1,4 @@
 import {createApp} from "vue";
-import welcome from './welcome.vue'
+import main from "./components/Delivery/main.vue";
 import axios from "axios";
-createApp(welcome).mount("#app")
+createApp(main).mount("#app")

@@ -23,8 +23,13 @@
         </div>
     </header>
     <div class="container">
-
-        <Students v-if="tabs"/>
+        <upload-file
+        v-if="tabs"
+        />
+<!--        <Students-->
+<!--            v-if="tabs"-->
+<!--            :items="lessonsApiData"-->
+<!--        />-->
         <form-lesson
             :tabs="tabs"
             :lessons-api-data="lessonsApiData"
@@ -41,6 +46,7 @@
 </template>
 
 <script>
+import uploadFile from "./components/testComponents/uploadFile.vue";
 import formLesson from './components/formLesson.vue'
 import modalWindow from './components/modalWindow.vue'
 import axios from "axios";
@@ -58,7 +64,8 @@ export default {
     components: {
         formLesson,
         modalWindow,
-        Students
+        Students,
+        uploadFile
     },
     created() {
         this.getTableTimeList();

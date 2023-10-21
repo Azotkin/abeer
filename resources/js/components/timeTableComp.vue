@@ -15,6 +15,17 @@ export default {
 </script>
 
 <template>
+    <div class="container align-items-start">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-7 g-3">
+
+
+
+        </div>
+
+    </div>
+
+
     <tr>
 
         <td>{{item.datetime}}</td>
