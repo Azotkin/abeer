@@ -1,7 +1,6 @@
 <script>
 import deleteFromBasket from "./basketComponents/deleteFromBasket.vue";
 import addToBasket from "./basketComponents/addToBasket.vue";
-import countProductComponent from "./basketComponents/countProductComponent.vue";
 import {create} from "lodash";
 
 export default {
@@ -13,8 +12,7 @@ export default {
     },
     components: {
         deleteFromBasket,
-        addToBasket,
-        countProductComponent
+        addToBasket
     },
     props: {
         item: Object,
@@ -37,8 +35,8 @@ export default {
 </script>
 
 <template>
-    <div class="row p-2">
-        <div class="col card-img">
+    <div class="cart_item row p-1 m-1">
+        <div class="pict col card-img">
             <img class="img-fluid" :src="item.image_path" :alt="item.price">
         </div>
         <div class="product-name" @click="showDescription=!showDescription">
@@ -61,14 +59,21 @@ export default {
 </template>
 
 <style scoped>
+.pict{
+    border-radius: 50%;
+}
 img {
     width: auto;
     max-width: 300px;
     max-height: 300px;
+    border-radius: 50%;
 }
 
 .category {
     color: #1e7e34;
+}
+.cart_item{
+    background-color: #d1c3b3;
 }
 
 

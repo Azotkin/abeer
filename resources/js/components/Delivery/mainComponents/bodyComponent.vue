@@ -2,6 +2,7 @@
 import cartItemComponent from "./cartItemComponent.vue";
 import addToCart from "./addToCart.vue"
 import basketComponent from "./basketComponent.vue";
+import newBasketComponent from "./newBasketComponent.vue";
 
 export default {
     data: function () {
@@ -10,7 +11,7 @@ export default {
     components: {
         cartItemComponent,
         addToCart,
-        basketComponent
+        newBasketComponent
     },
     props: {
         itemsApiData: Object,
@@ -21,7 +22,7 @@ export default {
 
 <template>
     <add-to-cart/>
-    <basket-component
+    <new-basket-component
         :basketItem="basketItem"
     />
     <div class="album py-5 bg-body-tertiary">

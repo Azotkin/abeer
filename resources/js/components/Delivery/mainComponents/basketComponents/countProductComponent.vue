@@ -5,13 +5,36 @@ export default {
             count:1
         }
     },
+    created(){
+this.count=localStorage[this.id]
+    },
+    props:{
+        id: Number
+    },
+    emits:[
+        'catchCount'
+    ],
     methods:{
         countMinus(){
-            if(this.count<=0){
-                this.count=0
+            if(this.count<=1){
+                this.count=1
             }else{
                 this.count--
+                this.getAwayCount()
             }
+        },
+        countPlus(){
+            this.count++;
+            this.getAwayCount()
+        },
+        getAwayCount(){
+            this.$emit('catchCount', this.count)
+        }
+    },
+    computed:{
+        countToLocalStorage(){
+            localStorage[this.id]=this.count
+return localStorage[this.id]
         }
     }
 }
@@ -24,7 +47,7 @@ export default {
 
         <div @click="countMinus" href="#" class="number-minus">−</div>
 
-        <div @click="count++" href="#" class="number-plus" >+</div>
+        <div @click="countPlus" href="#" class="number-plus" >+</div>
 
     </div>
 </template>

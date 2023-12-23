@@ -29,3 +29,5 @@ Route::post('/upload/image',[\App\Http\Controllers\uploadImage::class,'upLoad'])
 Route::post('/product/item/save',[\App\Http\Controllers\productController::class, 'store']);
 
 Route::post('/item/list/get',[\App\Http\Controllers\productController::class, 'index']);
+Route::post('/send/order',[\App\Http\Controllers\orderController::class,'store']);
+Route::post('/basket/get/totalprice', [\App\Http\Controllers\orderController::class, 'totalPrice']);

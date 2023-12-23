@@ -1,19 +1,23 @@
 <script>
-import countProductComponent from "./countProductComponent.vue";
 
 export default {
-    components: {countProductComponent},
+    components: {},
     data: function () {
         return {}
     },
     name: "addToBasket",
     props: {
         item: Object,
-        isBasket: Boolean
+        isBasket: Boolean,
+        count:0
     },
     methods: {
-        addToLocalStorage() {
-            localStorage[this.item['id']] = this.item['id']
+        addToLocalStorage(id, count) {
+            if(count===undefined){
+                count=1
+            }
+            localStorage[id]=count
+            // localStorage[this.item['id']] = this.item['id']
             this.$root.getItems()
         },
         deleteLocalStorage() {
@@ -24,12 +28,12 @@ export default {
 }
 
 
+
 </script>
 
 <template>
-    <div v-if="isBasket" class="count"><count-product-component/></div>
     <button class="btn">
-        <span @click="addToLocalStorage" v-if="!isBasket"> {{ this.item.price + ' &#8381' + '&#43' }}</span>
+        <span @click="addToLocalStorage(item['id'])" v-if="!isBasket"> {{ this.item.price + ' &#8381' + '&#43' }}</span>
         <span @click.prevent="deleteLocalStorage" v-if="isBasket">Удалить</span>
     </button>
 

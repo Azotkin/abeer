@@ -5,6 +5,7 @@ import footerComponent from "./mainComponents/footerComponent.vue";
 import loadComponent from "./loadComponent.vue";
 import axios from "axios";
 import cartItemComponent from "./mainComponents/cartItemComponent.vue";
+import dataSync from "./data";
 
 export default {
     name: 'main',
@@ -12,7 +13,11 @@ export default {
         return {
             itemsApiData: {},
             basketItem: {},
-            loadFlag: true
+            loadFlag: true,
+            dataSync: dataSync,
+            routes: {
+                '/circle': loadComponent
+            }
         }
     },
     components: {
@@ -30,8 +35,19 @@ export default {
         this.createBasket()
     },
     methods: {
-        productsSync:  function () {
-
+        productsSync: function (count, id) {
+            let totalPrice
+            axios({
+                methods: 'post',
+                url: '/api/basket/get/totalprice',
+                data: {
+                    count: count,
+                    id: id
+                }
+            }).then(response => (totalPrice = response)).catch(function (error) {
+                console.log(error)
+            })
+            return this.dataSync['basketTotalPrice'] = totalPrice
         },
         getItems() {
             axios({
@@ -40,7 +56,7 @@ export default {
             })
                 .then(response => (this.itemsApiData = response.data)).then(() => {
                 this.createBasket()
-                this.loadFlag=false
+                this.loadFlag = false
             }).catch(function (error) {
                 console.log(error)
             })
@@ -57,26 +73,38 @@ export default {
             }
             this.basketItem = basket
         }
+    },
+    computed: {
+        vueComponent() {
+            if (document.location.pathname == '/123') {
+                return loadComponent
+            } else {
+                return bodyComponent
+            }
+        }
     }
 }
 </script>
 
 <template>
-    <header-comp :count-products="basketItem.length"/>
+    <header-comp
+        v-if="!loadFlag"
+        :count-products="basketItem.length"
+    />
     <body-component
         v-if="!loadFlag"
         :itemsApiData="itemsApiData"
         :basketItem="basketItem"
     />
     <load-component
-    v-if="loadFlag"
+        v-if="loadFlag"
     />
 
     <footer-component/>
 </template>
 
 <style scoped>
-body{
+body {
     margin-top: 100px;
 }
 </style>
