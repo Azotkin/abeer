@@ -6,73 +6,67 @@ export default {
     props: {
         countProducts: Number
     },
-    computed: {}
+    computed: {},
+    methods:{
+        push(number){
+            this.$root.dataSync['tabs']=number
+        }
+    }
 }
 </script>
 
 <template>
-    <div class="header px-3 py-2 border-bottom mb-3">
-        <div class="container d-flex flex-wrap justify-content-center">
-            <div class="logo">
-                <img class="logo_delivery" src="../../../../../public/img/devilerer_logo.png"/>
+    <header class="navbar-area">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container nav-container">
+                <div class="responsive-mobile-menu">
+                    <button class="menu toggle-btn d-block d-lg-none" data-target="#themefie_main_menu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-left"></span>
+                        <span class="icon-right"></span>
+                    </button>
                 </div>
-            <div class="d-flex align-items-center">
-                <h1 class="rail">Железная доставка</h1>
+                <div class="collapse navbar-collapse" id="themefie_main_menu">
+                    <ul class="navbar-nav menu-open">
+                        <li>
+                            <a @click="push(0)">О НАС</a>
+                        </li>
+                        <li>
+                            <a href="#">КОНТАКТЫ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logo">
+                    <a class="main-logo" href="home-1.html"><img src="assets/img/logo.png" alt="img"></a>
+                </div>
+                <div class="nav-right-part nav-right-part-mobile">
+                    <ul>
+                        <li><a class="search" href="#"><i class="ri-search-line"></i></a>
+                        </li>
+                        <li class="phone-contact d-md-block d-none"><i class="ri-phone-fill float-start"></i>
+                            +997 509 153 849
+                        </li>
+                        <li class="menu-cart" @click="push(1)">Корзина<span>{{countProducts}}</span></li>
+                        <li>49.50 $</li>
+                    </ul>
+                </div>
+                <div class="nav-right-part nav-right-part-desktop">
+                    <ul>
+                        <li><a class="search" href="#"><i class="ri-search-line"></i></a>
+                        </li>
+                        <li class="phone-contact"><i class="ri-phone-fill float-start"></i>
+                            +7(964)-522-2442
+                        </li>
+                        <li class="menu-cart" data-bs-toggle="modal"
+                            data-bs-target='#basketModal' @click="push(1)">Корзина <span>{{countProducts}}</span></li>
+                    </ul>
+                </div>
             </div>
-                <form class="d-flex align-items-center col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search">
-                <input type="search" class="form-control" placeholder="Помогу найти..." aria-label="Search">
-            </form>
-
-            <div class="text-end">
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Добавление товара
-                </button>
-                <button type="button"
-                        class="basket-btn m-3 btn" data-bs-toggle="modal"
-                        data-bs-target='#basketModal'><img src="../../../../../storage/app/public/basketIcon.png" alt="basket"> <span
-                    class="badge text-bg-secondary">{{ ' ' + countProducts }}</span></button>
-            </div>
-        </div>
-    </div>
-
+        </nav>
+    </header>
 
 </template>
 
 <style scoped>
-.header{
-    background-color: #d1c3b3;
-
-}
-.rail{
-    font-family: "New";
-    color: whitesmoke;
-stroke: #0b2e13;
-}
-.basket-btn{
-    position: fixed;
-    z-index: 50;
-    margin: 10px;
-}
-.border-bottom{
-    //position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 50;
-}
-
-.btn {
-    background-color: #e3e2e2;
-    color: #f3883b;
-}
-
-.btn:hover {
-    background-color: #f3883b;
-    color: #e3e2e2;
-}
-.logo_delivery{
-    height: 150px;
-    width: 190px    ;
-}
 @font-face {
     font-family: "New";
 }

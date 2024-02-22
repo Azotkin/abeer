@@ -18,4 +18,18 @@ Route::get('/', function () {
 });
 
 
+Route::get('/login', [\App\Http\Controllers\authController::class, 'login'])->name('login');
+Route::get('/register', [\App\Http\Controllers\authController::class, 'getRegisterForm']);
+Route::get('/logout', [\App\Http\Controllers\authController::class, 'logout'])->name('logout');
+Route::post('/registerProcess', [\App\Http\Controllers\authController::class, 'registerProcess'])->name('registerProcess');
+Route::post('/login_process', [\App\Http\Controllers\authController::class, 'authenticate'])->name('authenticate');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/adminPanel',function (){
+        return view('adminPanel');
+    });
+});
+
 require __DIR__.'/auth.php';
+

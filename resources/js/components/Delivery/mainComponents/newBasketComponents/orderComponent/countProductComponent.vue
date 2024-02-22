@@ -5,8 +5,12 @@ export default {
             count: 1
         }
     },
+    mounted() {
+
+    },
     created() {
         this.count = localStorage[this.id]
+        this.$emit('catchCount', this.count)
     },
     props: {
         id: Number
@@ -29,25 +33,26 @@ export default {
 
         },
         getAwayCount() {
-            this.$root.productsSync(this.count, this.id)
             this.$emit('catchCount', this.count)
         }
     },
-    computed: {},
+    computed: {
+    },
     watch: {}
 }
 </script>
 
 <template>
-    <div class="number" data-step="1" data-min="1" data-max="100">
+    <td class="table-quantity">
+        <form>
+            <div class="quantity buttons_added">
+                <input type="button" value="-" class="minus" @click="countMinus">
+                <input v-model="count"  step="1" name="quantity">
+                <input type="button" value="+" class="plus" @click="countPlus">
+            </div>
+        </form>
+    </td>
 
-        <input v-model="count" class="number-text" type="text" name="count">
-
-        <div @click="countMinus" class="number-minus">−</div>
-
-        <div @click="countPlus" class="number-plus">+</div>
-
-    </div>
 </template>
 
 <style scoped>

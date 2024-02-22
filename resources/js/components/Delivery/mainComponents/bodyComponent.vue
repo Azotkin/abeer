@@ -1,42 +1,57 @@
 <script>
-import cartItemComponent from "./cartItemComponent.vue";
-import addToCart from "./addToCart.vue"
-import basketComponent from "./basketComponent.vue";
 import newBasketComponent from "./newBasketComponent.vue";
-
+import carts from "@/components/Delivery/mainComponents/carts.vue";
+import addToBasket from "@/components/Delivery/mainComponents/basketComponents/addToBasket.vue";
+import order from './order.vue'
 export default {
     data: function () {
-        return {}
+        return {
+            tabs: [
+                'carts',
+                'newBasketComponent',
+                'order'
+            ]
+        }
     },
     components: {
-        cartItemComponent,
-        addToCart,
-        newBasketComponent
+        addToBasket,
+        carts,
+        newBasketComponent,
+        order
     },
     props: {
-        itemsApiData: Object,
-        basketItem: Object
+        data: Object
+    },
+    methods: {
+
+    },
+    computed:{
+        currentTabComponent() {
+            this.$root.getItems()
+            return this.tabs[this.data['tabs']]
+        }
     }
 }
 </script>
 
 <template>
-    <add-to-cart/>
-    <new-basket-component
-        :basketItem="basketItem"
-    />
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <cart-item-component
-                    v-for="item in itemsApiData"
-                    :item="item"
-                    :basket="basketItem"
-                />
-            </div>
-        </div>
-    </div>
+    <body class="sc5">
+    <div class="body-overlay" id="body-overlay"></div>
+<!--    <new-basket-component-->
+<!--        :basketItem="this.data['basket']"-->
+<!--        :totalPrice="this.data['totalPrice']"-->
+<!--    />-->
+<keep-alive>
+    <component
+        :is="currentTabComponent"
+        :basketItem="this.data['basket']"
+        :totalPrice="this.data['totalPrice']"
+    ></component>
+</keep-alive>
 
+
+
+    </body>
 </template>
 
 <style scoped>

@@ -4,24 +4,18 @@ import bodyComponent from "./mainComponents/bodyComponent.vue";
 import footerComponent from "./mainComponents/footerComponent.vue";
 import loadComponent from "./loadComponent.vue";
 import axios from "axios";
-import cartItemComponent from "./mainComponents/cartItemComponent.vue";
 import dataSync from "./data";
+
 
 export default {
     name: 'main',
     data: function () {
         return {
-            itemsApiData: {},
-            basketItem: {},
             loadFlag: true,
             dataSync: dataSync,
-            routes: {
-                '/circle': loadComponent
-            }
         }
     },
     components: {
-        cartItemComponent,
         headerComp,
         bodyComponent,
         footerComponent,
@@ -35,26 +29,12 @@ export default {
         this.createBasket()
     },
     methods: {
-        productsSync: function (count, id) {
-            let totalPrice
-            axios({
-                methods: 'post',
-                url: '/api/basket/get/totalprice',
-                data: {
-                    count: count,
-                    id: id
-                }
-            }).then(response => (totalPrice = response)).catch(function (error) {
-                console.log(error)
-            })
-            return this.dataSync['basketTotalPrice'] = totalPrice
-        },
         getItems() {
             axios({
                 method: 'post',
                 url: '/api/item/list/get'
             })
-                .then(response => (this.itemsApiData = response.data)).then(() => {
+                .then(response => (this.dataSync['cartItemComponent'] = response.data)).then(() => {
                 this.createBasket()
                 this.loadFlag = false
             }).catch(function (error) {
@@ -64,25 +44,24 @@ export default {
 
         createBasket() {
             let basket = [];
-            for (let i = 0; i < this.itemsApiData.length; i++) {
+            for (let i = 0; i < this.dataSync['cartItemComponent'].length; i++) {
                 for (let j = 0; j < localStorage.length; j++) {
-                    if (this.itemsApiData[i]['id'] == localStorage.key(j)) {
-                        basket.push(this.itemsApiData[i])
+                    if (this.dataSync['cartItemComponent'][i]['id'] == localStorage.key(j)) {
+                        basket.push(this.dataSync['cartItemComponent'][i])
                     }
                 }
             }
-            this.basketItem = basket
+            this.dataSync['basket'] = basket,
+                this.basketItem = basket
         }
     },
-    computed: {
-        vueComponent() {
-            if (document.location.pathname == '/123') {
-                return loadComponent
-            } else {
-                return bodyComponent
-            }
+    provide(){
+        return{
+            dataSync: this.dataSync
         }
-    }
+    },
+    computed: {},
+
 }
 </script>
 
@@ -93,8 +72,10 @@ export default {
     />
     <body-component
         v-if="!loadFlag"
-        :itemsApiData="itemsApiData"
-        :basketItem="basketItem"
+        :itemsApiData="dataSync['cartItemComponent']"
+        :basketItem="dataSync['basket']"
+        :totalPrice="dataSync['totalPrice']"
+        :data="dataSync"
     />
     <load-component
         v-if="loadFlag"
@@ -105,6 +86,6 @@ export default {
 
 <style scoped>
 body {
-    margin-top: 100px;
+    margin-top: 70px;
 }
 </style>

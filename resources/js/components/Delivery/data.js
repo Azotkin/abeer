@@ -1,3 +1,8 @@
 export default {
-    basketTotalPrice:0
+    basket: [],
+    cartItemComponent: [],
+    order: [],
+    totalPrice: {},
+    tabs:0,
+    totalTotalPrice:0
 }

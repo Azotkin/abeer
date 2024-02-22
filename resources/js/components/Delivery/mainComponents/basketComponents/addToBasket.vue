@@ -32,21 +32,13 @@ export default {
 </script>
 
 <template>
-    <button class="btn">
-        <span @click="addToLocalStorage(item['id'])" v-if="!isBasket"> {{ this.item.price + ' &#8381' + '&#43' }}</span>
+    <button class="btn btn-secondary">
+        <span @click="addToLocalStorage(item['id'])" v-if="!isBasket"> Добавить </span>
         <span @click.prevent="deleteLocalStorage" v-if="isBasket">Удалить</span>
     </button>
 
 </template>
 
 <style scoped>
-.btn {
-    background-color: #e3e2e2;
-    color: #f3883b;
-}
 
-.btn:hover {
-    background-color: #f3883b;
-    color: #e3e2e2;
-}
 </style>
